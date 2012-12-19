@@ -6,7 +6,9 @@
       <img src="http://i.imgur.com/sVa20.jpg" alt="One Hot Minute - RHCP" style="width:300px;">
     </td>
     <td>
-      `oneHotMinute` is a jQuery Plugin written in CoffeeScript to help...
+      `oneHotMinute` is a jQuery Plugin written in CoffeeScript to help you with some tedious tasks involving
+      `minutes` handling, such as converting minutes into hours or hour strings (1:30) and floats (1.5) into
+      integer minutes.
       You can pass many options explained at the bottom of this [README](#options), the best way to understand
       what this plugin does is to check the example in the [documentation](#documentation).
     </td>
