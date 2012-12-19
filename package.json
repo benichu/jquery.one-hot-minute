@@ -1,0 +1,31 @@
+{
+  "name"            : "jquery.one-hot-minute",
+  "title"           : "oneHotMinute",
+  "version"         : "1.0.0.proto",
+  "homepage"        : "https://github.com/benichu/jquery.one-hot-minute",
+  "author"          : {
+    "name"  : "Benjamin Thouret",
+    "email" : "ben@2ret.com",
+    "url"   : "http://benjamin.thouret.com"
+  },
+  "repository" : {
+    "type" : "git",
+    "url"  : "git@github.com:benichu/jquery.one-hot-minute.git"
+  },
+  "description" : "",
+  "bugs" : {
+    "url" : "https://github.com/benichu/jquery.one-hot-minute/issues"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url" : "https://github.com/benichu/jquery.one-hot-minute/LICENSE-MIT"
+  }],
+  "devDependencies" : {
+    "grunt"                : "0.3.15",
+    "grunt-coffee"         : "0.0.6",
+    "grunt-jasmine-runner" : "0.5.5"
+  },
+  "scripts": {
+    "test": "grunt travis"
+  }
+}
