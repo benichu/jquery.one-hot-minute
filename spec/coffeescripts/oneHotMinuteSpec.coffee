@@ -1,4 +1,7 @@
 describe 'oneHotMinute', ->
+  options =
+    debug: false
+
   beforeEach ->
     loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )

@@ -37,7 +37,7 @@ jQuery ->
     @init = ->
       @settings = $.extend( {}, @defaults, options )
 
-      @setState 'waiting'
+      @setState 'ready'
 
 
     # initialise the plugin

@@ -1,7 +1,7 @@
 {
   "name"            : "jquery.one-hot-minute",
   "title"           : "oneHotMinute",
-  "version"         : "1.0.0.proto",
+  "version"         : "1.0.0",
   "homepage"        : "https://github.com/benichu/jquery.one-hot-minute",
   "author"          : {
     "name"  : "Benjamin Thouret",
