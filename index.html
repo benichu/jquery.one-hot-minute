@@ -24,7 +24,7 @@
         <br />
         <span class="zero" data-minute="0">zero</span>
         <br />
-        <span class="normal" data-minute="130">normal</span>
+        <span class="normal" data-minute="210.6">normal</span>
         <br />
         <input class="field" data-minute="130" value="field" />
       </div>
@@ -46,11 +46,18 @@
   </div>
 
   <script src="js/libs/jquery.js"></script>
-  <script src="js/libs/underscore.js"></script>
   <script src="js/jquery.one-hot-minute.js"></script>
   <script>
-  $( function() {
-  } );
+    $( function() {
+      $( '#main #minutesToHours' ).oneHotMinute( {
+        debug: true,
+        processableElements: ['span', 'input'],
+        processMethod: "minutesToHours",
+        onReady: function() {
+          console.log("READY");
+        }
+      } );
+    } );
   </script>
 
 </body>
