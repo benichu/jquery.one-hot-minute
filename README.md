@@ -1,5 +1,7 @@
 # [oneHotMinute](https://github.com/benichu/jquery.one-hot-minute) [![Build Status](https://secure.travis-ci.org/benichu/jquery.one-hot-minute.png?branch=master)](https://travis-ci.org/benichu/jquery.one-hot-minute)
 
+    WORK IN PROGRESS, HIGHLY UNSTABLE
+
 <table>
   <tr>
     <td style="width:300px;">
