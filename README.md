@@ -32,14 +32,42 @@ download this file [jquery.one-hot-minute.min.js](https://github.com/benichu/jqu
 and add it to your project.
 
 
-### Basic HTML
+### Basic HTML, processingMethod: `minutesToHours`
 
-    TODO
+Format an element's display value to a duration format: HH:MM
+That HTML element should have a `data-minute` (or an option `dataAttr` set) attribute
+with the raw value to be converted
+
+__Example__
+
+```html
+   <span id="my_element" data-minute="130">130</span>
+   #=> <span id="my_element" data-minute="130">02h10</span>
+```
+
+__Basic Initialization__
+
+```javascript
+$("#main").oneHotMinute({
+  processableElements: ['span', 'input'],
+  processMethod: "minutesToHours",
+  onReady: function(el) {
+    // do whatever you want, for example, formatting your sub-totals...
+  }
+});
+```
 
 ### Options
 
 ```javascript
 debug: false
+processMethod: "minutesToHours"           # ["minutesToHours", "valueToMinutes"]
+processableElements: ['span', 'input']    # What elements are we trying to process?
+dataAttr: "data-minute"                   # attribute with the raw value to be converted (used with processMethod: `minutesToHours`)
+saveAttr: "data-minute"                   # attribute where the converted value is saved (used with processMethod: `valueToMinutes`)
+
+onReady: ->                               # Function(), called when oneHotMinute has processed all the elements
+onError: ->                               # Function(), called when oneHotMinute has experienced an error
 ```
 
 ## Developer
