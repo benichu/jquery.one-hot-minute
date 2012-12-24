@@ -30,6 +30,16 @@ jQuery ->
     @callSettingFunction = ( name, args = [] ) ->
       @settings[name].apply( this, args )
 
+    # Format an element's display value to a duration format: HH:MM
+    # That HTML element should have a `data-minute` attribute with the raw
+    # value to be converted
+    #
+    # Example (pseudo-code):
+    #
+    #   <span id="my_element" data-minute="130">130</span>
+    #   minutesToHours("#my_element")
+    #   #=> <span id="my_element" data-minute="130">2h10</span>
+    #
     minutesToHours = (el) =>
       log "applying minutesToHours"
       # do we force at `0` if dataAttr is empty
@@ -48,6 +58,22 @@ jQuery ->
       else
         el.html result
 
+    # Format an element's content value into minutes, and saves it
+    # into a pre-defined element's data attribute (ex: data-minute)
+    #
+    # Triggered at init() or by a `blur()` event (element will probably be an input)
+    #
+    # Examples (pseudo-code):
+    #
+    #   1/ value is a float or integer
+    #   <input id="my_element" value="1.5" />
+    #   valueToMinutes("#my_element")
+    #   #=> <input id="my_element" data-minute="90" value="1.5" />
+    #
+    #   2/ value is a duration string
+    #   <input id="my_element" value="1h30" />
+    #   #=> <input id="my_element" data-minute="90" value="1h30" />
+    #
     valueToMinutes = (el) =>
       log "valueToMinutes"
 

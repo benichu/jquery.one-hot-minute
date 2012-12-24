@@ -1,7 +1,6 @@
 # [oneHotMinute](https://github.com/benichu/jquery.one-hot-minute) [![Build Status](https://travis-ci.org/benichu/jquery.one-hot-minute.png)](https://travis-ci.org/benichu/jquery.one-hot-minute)
 
     WORK IN PROGRESS, HIGHLY UNSTABLE
-
     - minutesToHours processor done
     - valueToMinutes processor in progress
 
@@ -60,6 +59,36 @@ __Basic Initialization__
 $("#main").oneHotMinute({
   processableElements: ['span', 'input'],
   processMethod: "minutesToHours",
+  onReady: function(el) {
+    // do whatever you want...
+  }
+});
+```
+
+### EXAMPLE of processingMethod: `valueToMinutes`
+
+Format an element's content value into minutes, and saves it
+into a pre-defined element's data attribute
+(ex: `data-minute` or whatever is defined as an option `saveAttr`)
+
+__Example__
+
+```html
+  <input id="my_element" value="1.5" />
+  #=> <input id="my_element" data-minute="90" value="1.5" />
+```
+also,
+```html
+  <input id="my_element" value="1h30" />
+  #=> <input id="my_element" data-minute="90" value="1h30" />
+```
+
+__Basic Initialization__
+
+```javascript
+$("#main").oneHotMinute({
+  processableElements: ['span', 'input'],
+  processMethod: "valueToMinutes",
   onReady: function(el) {
     // do whatever you want...
   }
