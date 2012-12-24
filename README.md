@@ -1,9 +1,5 @@
 # [oneHotMinute](https://github.com/benichu/jquery.one-hot-minute) [![Build Status](https://travis-ci.org/benichu/jquery.one-hot-minute.png)](https://travis-ci.org/benichu/jquery.one-hot-minute)
 
-    WORK IN PROGRESS, HIGHLY UNSTABLE
-    - minutesToHours processor done
-    - valueToMinutes processor in progress
-
 <table>
   <tr>
     <td style="width:300px;">
