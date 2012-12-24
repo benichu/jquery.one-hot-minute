@@ -59,20 +59,16 @@ jQuery(function() {
       return el.attr(_this.settings.saveAttr, sign + minutes);
     };
     this._normalizeDecimalSeparator = function(value) {
-      var normalizedValue;
       if (!(value != null)) {
         value = "";
       }
-      normalizedValue = value.replace(/,/, ".");
-      return normalizedValue;
+      return value.replace(/,/, ".");
     };
     this._trimWhitespace = function(value) {
-      var trimmedValue;
       if (!(value != null)) {
         value = "";
       }
-      trimmedValue = value.replace(/^\s+|\s+$/g, "");
-      return trimmedValue;
+      return value.replace(/^\s+|\s+$/g, "");
     };
     this._zeroFill = function(number, width) {
       if (!(number != null)) {

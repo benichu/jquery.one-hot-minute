@@ -107,8 +107,7 @@ jQuery ->
     @_normalizeDecimalSeparator = (value) ->
       if not value? # protect against `null` or `undefined`
         value = ""
-      normalizedValue = value.replace /,/, "."
-      normalizedValue
+      value.replace /,/, "."
 
     # Trimming white-space
     # _trimWhitespace(" 111 ")
@@ -116,8 +115,7 @@ jQuery ->
     @_trimWhitespace = (value) ->
       if not value? # protect against `null` or `undefined`
         value = ""
-      trimmedValue = value.replace /^\s+|\s+$/g, ""
-      trimmedValue
+      value.replace /^\s+|\s+$/g, ""
 
     # Homemade zero-padding function
     # _zeroFill(1, 3)
