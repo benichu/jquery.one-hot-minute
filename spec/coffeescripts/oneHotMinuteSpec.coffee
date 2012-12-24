@@ -6,6 +6,29 @@ describe 'oneHotMinute', ->
     loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
 
+  describe 'String: .zeroFill()', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element )
+
+    it 'should be defined', ->
+      expect( @plugin.zeroFill ).toBeDefined()
+
+    it 'should prepend `0` to a string', ->
+      expect( @plugin.zeroFill('1',8) ).toBe("00000001")
+
+    it 'should prepend `0` to an integer', ->
+      expect( @plugin.zeroFill(1,8) ).toBe("00000001")
+
+    it 'should prepend `0` to an empty string', ->
+      expect( @plugin.zeroFill("",2) ).toBe("00")
+
+    it 'should prepend `0` to a null value', ->
+      expect( @plugin.zeroFill(null,2) ).toBe("00")
+
+    it 'should prepend `0` to an undefined value', ->
+      expect( @plugin.zeroFill(undefined,2) ).toBe("00")
+
+  # Basic plugin behavior, nothing should be touched
   describe 'plugin behavior', ->
     it 'should be available on the jQuery object', ->
       expect( $.fn.oneHotMinute ).toBeDefined()

@@ -32,12 +32,13 @@ jQuery ->
 
     minutesToHours = (el) =>
       log "applying minutesToHours"
+      # do we force at `0` if dataAttr is empty
       raw_minutes = parseInt el.attr(@settings.dataAttr) or 0
       sign = if raw_minutes < 0 then "-" else ""
       raw_minutes = Math.abs(raw_minutes)
       hours = Math.floor(raw_minutes / 60)
       minutes = raw_minutes % 60
-      minutes = zeroFill(minutes, 2)
+      minutes = @zeroFill(minutes, 2)
 
       result = sign + hours + "h" + minutes
 
@@ -50,10 +51,12 @@ jQuery ->
     valueToMinutes = (el) =>
       log "valueToMinutes"
 
-    # Homemade padding function
+    # Homemade zero-padding function
     # zeroFill(1, 3)
     # #=> "001"
-    zeroFill = (number, width) ->
+    @zeroFill = (number, width) ->
+      if not number? # protect against `null` or `undefined`
+        number = ""
       width -= number.toString().length
       return new Array(width + ((if /\./.test(number) then 2 else 1))).join("0") + number  if width > 0
       number + "" # always return a string
@@ -83,16 +86,18 @@ jQuery ->
           when 'minutesToHours'
             @$processableElements.each ->
               minutesToHours($(this))
-
+            @setState 'ready'
           when 'valueToMinutes'
-            valueToMinutes($(this))
-
+            @$processableElements.each ->
+              valueToMinutes($(this))
+            @setState 'ready'
           else
             @setState 'error'
 
-        @setState 'ready'
-
-        @callSettingFunction 'onReady', [@$element]
+        if @getState() is "ready"
+          @callSettingFunction 'onReady', [@$element]
+        else
+          @callSettingFunction 'onError', [@$element]
 
 
     # initialise the plugin
@@ -110,6 +115,7 @@ jQuery ->
       saveAttr: "data-minute"                   # attribute where the converted value is saved (used with processMethod: `valueToMinutes`)
 
       onReady: ->                               # Function(), called when oneHotMinute has processed all the elements
+      onError: ->                               # Function(), called when oneHotMinute has experienced an error
 
   $.fn.oneHotMinute = ( options ) ->
     this.each ->

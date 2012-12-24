@@ -1,7 +1,7 @@
 
 jQuery(function() {
   $.oneHotMinute = function(element, options) {
-    var log, minutesToHours, state, valueToMinutes, zeroFill,
+    var log, minutesToHours, state, valueToMinutes,
       _this = this;
     state = 'waiting';
     this.settings = {};
@@ -29,7 +29,7 @@ jQuery(function() {
       raw_minutes = Math.abs(raw_minutes);
       hours = Math.floor(raw_minutes / 60);
       minutes = raw_minutes % 60;
-      minutes = zeroFill(minutes, 2);
+      minutes = _this.zeroFill(minutes, 2);
       result = sign + hours + "h" + minutes;
       if (el.attr("value")) {
         return el.attr("value", result);
@@ -40,7 +40,10 @@ jQuery(function() {
     valueToMinutes = function(el) {
       return log("valueToMinutes");
     };
-    zeroFill = function(number, width) {
+    this.zeroFill = function(number, width) {
+      if (!(number != null)) {
+        number = "";
+      }
       width -= number.toString().length;
       if (width > 0) {
         return new Array(width + (/\./.test(number) ? 2 : 1)).join("0") + number;
@@ -68,15 +71,22 @@ jQuery(function() {
             this.$processableElements.each(function() {
               return minutesToHours($(this));
             });
+            this.setState('ready');
             break;
           case 'valueToMinutes':
-            valueToMinutes($(this));
+            this.$processableElements.each(function() {
+              return valueToMinutes($(this));
+            });
+            this.setState('ready');
             break;
           default:
             this.setState('error');
         }
-        this.setState('ready');
-        return this.callSettingFunction('onReady', [this.$element]);
+        if (this.getState() === "ready") {
+          return this.callSettingFunction('onReady', [this.$element]);
+        } else {
+          return this.callSettingFunction('onError', [this.$element]);
+        }
       }
     };
     this.init();
@@ -88,7 +98,8 @@ jQuery(function() {
     processableElements: ['span', 'input'],
     dataAttr: "data-minute",
     saveAttr: "data-minute",
-    onReady: function() {}
+    onReady: function() {},
+    onError: function() {}
   };
   return $.fn.oneHotMinute = function(options) {
     return this.each(function() {

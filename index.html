@@ -20,6 +20,7 @@
     <div id="main">
       <div id="minutesToHours">
         <h2>minutesToHours</h2>
+        <span class="empty">undefined</span>
         <span class="empty" data-minute="">empty</span>
         <br />
         <span class="zero" data-minute="0">zero</span>
@@ -55,6 +56,9 @@
         processMethod: "minutesToHours",
         onReady: function() {
           console.log("READY");
+        },
+        onError: function() {
+          console.log("ERROR");
         }
       } );
     } );
