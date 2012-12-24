@@ -58,7 +58,7 @@ $("#main").oneHotMinute({
   processableElements: ['span', 'input'],
   processMethod: "minutesToHours",
   onReady: function(el) {
-    // do whatever you want, for example, formatting your sub-totals...
+    // do whatever you want...
   }
 });
 ```
