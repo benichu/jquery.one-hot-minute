@@ -47,6 +47,9 @@ describe 'oneHotMinute', ->
     it 'should process a decimal value', ->
       expect( @$element.find("#valueToMinutes input.normal.decimal").attr("data-minute") ).toEqual "54"
 
+    it 'should process a decimal value with a comma instead of a point', ->
+      expect( @$element.find("#valueToMinutes input.normal.decimal.comma").attr("data-minute") ).toEqual "54"
+
     it 'should process a negative value', ->
       expect( @$element.find("#valueToMinutes input.normal.decimal.negative").attr("data-minute") ).toEqual "-54"
 
@@ -106,6 +109,19 @@ describe 'oneHotMinute', ->
 
     it 'should prepend `0` to an undefined value', ->
       expect( @plugin._zeroFill(undefined,2) ).toBe("00")
+
+  describe 'String: ._normalizeDecimalSeparator()', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element )
+
+    it 'should be defined', ->
+      expect( @plugin._normalizeDecimalSeparator ).toBeDefined()
+
+    it 'should normalize a comma into a point', ->
+      expect( @plugin._normalizeDecimalSeparator("1,20") ).toBe("1.20")
+
+    it 'should keep a point separator', ->
+      expect( @plugin._normalizeDecimalSeparator("1.20") ).toBe("1.20")
 
   describe 'String: ._trimWhitespace()', ->
     beforeEach ->

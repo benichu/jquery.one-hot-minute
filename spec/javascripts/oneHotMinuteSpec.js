@@ -51,6 +51,9 @@ describe('oneHotMinute', function() {
     it('should process a decimal value', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.decimal").attr("data-minute")).toEqual("54");
     });
+    it('should process a decimal value with a comma instead of a point', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.decimal.comma").attr("data-minute")).toEqual("54");
+    });
     return it('should process a negative value', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.decimal.negative").attr("data-minute")).toEqual("-54");
     });
@@ -115,6 +118,20 @@ describe('oneHotMinute', function() {
     });
     return it('should prepend `0` to an undefined value', function() {
       return expect(this.plugin._zeroFill(void 0, 2)).toBe("00");
+    });
+  });
+  describe('String: ._normalizeDecimalSeparator()', function() {
+    beforeEach(function() {
+      return this.plugin = new $.oneHotMinute(this.$element);
+    });
+    it('should be defined', function() {
+      return expect(this.plugin._normalizeDecimalSeparator).toBeDefined();
+    });
+    it('should normalize a comma into a point', function() {
+      return expect(this.plugin._normalizeDecimalSeparator("1,20")).toBe("1.20");
+    });
+    return it('should keep a point separator', function() {
+      return expect(this.plugin._normalizeDecimalSeparator("1.20")).toBe("1.20");
     });
   });
   describe('String: ._trimWhitespace()', function() {

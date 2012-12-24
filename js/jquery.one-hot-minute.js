@@ -52,11 +52,19 @@ jQuery(function() {
           getMinutes = delimiter_index < rawValue.length ? rawValue.substr(delimiter_index + 1, 2) : 0;
           minutes = (parseInt(getHours) * 60) + parseInt(getMinutes);
         } else {
-          minutes = parseFloat(rawValue) * 60;
+          minutes = parseFloat(_this._normalizeDecimalSeparator(rawValue)) * 60;
           sign = "";
         }
       }
       return el.attr(_this.settings.saveAttr, sign + minutes);
+    };
+    this._normalizeDecimalSeparator = function(value) {
+      var normalizedValue;
+      if (!(value != null)) {
+        value = "";
+      }
+      normalizedValue = value.replace(/,/, ".");
+      return normalizedValue;
     };
     this._trimWhitespace = function(value) {
       var trimmedValue;
@@ -101,7 +109,10 @@ jQuery(function() {
             break;
           case 'valueToMinutes':
             this.$processableElements.each(function() {
-              return valueToMinutes($(this));
+              valueToMinutes($(this));
+              return $(this).bind("blur", function() {
+                return valueToMinutes($(this));
+              });
             });
             this.setState('ready');
             break;

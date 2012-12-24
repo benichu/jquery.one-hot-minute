@@ -96,11 +96,19 @@ jQuery ->
           minutes = (parseInt(getHours) * 60) + parseInt(getMinutes)
         else
           # raw_value is Integer, ex: 1 or Decimal, ex: 1.5
-          minutes = parseFloat(rawValue) * 60
+          minutes = parseFloat(@_normalizeDecimalSeparator(rawValue)) * 60
           sign = ""
 
-
       el.attr(@settings.saveAttr, sign + minutes)
+
+    # Normalize decimal separator
+    # _normalizeDecimalSeparator("1,2")
+    # #=> "1.2"
+    @_normalizeDecimalSeparator = (value) ->
+      if not value? # protect against `null` or `undefined`
+        value = ""
+      normalizedValue = value.replace /,/, "."
+      normalizedValue
 
     # Trimming white-space
     # _trimWhitespace(" 111 ")
@@ -150,7 +158,11 @@ jQuery ->
           when 'valueToMinutes'
             @$processableElements.each ->
               valueToMinutes($(this))
+              # bind events to the element
+              $(this).bind "blur", ->
+                valueToMinutes($(this))
             @setState 'ready'
+
           else
             @setState 'error'
 
