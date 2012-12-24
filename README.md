@@ -44,7 +44,7 @@ __Example__
    <span id="my_element" data-minute="130">130</span>
    #=> <span id="my_element" data-minute="130">2h10</span>
 ```
-ALSO,
+also,
 ```html
    <input id="my_element" data-minute="130" />
    #=> <input id="my_element" data-minute="130" value="2h10" />
