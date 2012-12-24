@@ -2,6 +2,9 @@
 
     WORK IN PROGRESS, HIGHLY UNSTABLE
 
+    - minutesToHours processor done
+    - valueToMinutes processor in progress
+
 <table>
   <tr>
     <td style="width:300px;">
