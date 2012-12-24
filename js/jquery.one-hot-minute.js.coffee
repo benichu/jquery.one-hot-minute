@@ -40,7 +40,7 @@ jQuery ->
     #   minutesToHours("#my_element")
     #   #=> <span id="my_element" data-minute="130">2h10</span>
     #
-    minutesToHours = (el) =>
+    @minutesToHours = (el) =>
       log "applying minutesToHours"
       # do we force at `0` if dataAttr is empty
       rawMinutes = parseInt el.attr(@settings.dataAttr) or 0
@@ -74,7 +74,7 @@ jQuery ->
     #   <input id="my_element" value="1h30" />
     #   #=> <input id="my_element" data-minute="90" value="1h30" />
     #
-    valueToMinutes = (el) =>
+    @valueToMinutes = (el) =>
       log "valueToMinutes"
       minutes = 0
       sign = ""
@@ -144,7 +144,7 @@ jQuery ->
 
         # look for processableElements
         log "processableElements: #{@settings.processableElements}"
-        @$processableElements =  @$element.find(@settings.processableElements.toString())
+        @$processableElements = @$element.find(@settings.processableElements.toString()) or @$element
 
         settings = @settings
         self = @
@@ -153,14 +153,16 @@ jQuery ->
         switch @settings.processMethod
           when 'minutesToHours'
             @$processableElements.each ->
-              minutesToHours($(this))
+              self.minutesToHours($(this))
             @setState 'ready'
           when 'valueToMinutes'
             @$processableElements.each ->
-              valueToMinutes($(this))
+              self.valueToMinutes($(this))
               # bind events to the element
               $(this).bind "blur", ->
-                valueToMinutes($(this))
+                self.valueToMinutes($(this))
+                self.callSettingFunction 'onBlur', [$(this)]
+
             @setState 'ready'
 
           else
@@ -188,6 +190,7 @@ jQuery ->
 
       onReady: ->                               # Function(), called when oneHotMinute has processed all the elements
       onError: ->                               # Function(), called when oneHotMinute has experienced an error
+      onBlur: ->                               # Function(), called when an element processed has experienced a successfull processing
 
   $.fn.oneHotMinute = ( options ) ->
     this.each ->

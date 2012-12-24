@@ -1,7 +1,7 @@
 
 jQuery(function() {
   $.oneHotMinute = function(element, options) {
-    var log, minutesToHours, state, valueToMinutes,
+    var log, state,
       _this = this;
     state = 'waiting';
     this.settings = {};
@@ -21,7 +21,7 @@ jQuery(function() {
       }
       return this.settings[name].apply(this, args);
     };
-    minutesToHours = function(el) {
+    this.minutesToHours = function(el) {
       var hours, minutes, rawMinutes, result, sign;
       log("applying minutesToHours");
       rawMinutes = parseInt(el.attr(_this.settings.dataAttr) || 0);
@@ -37,7 +37,7 @@ jQuery(function() {
         return el.html(result);
       }
     };
-    valueToMinutes = function(el) {
+    this.valueToMinutes = function(el) {
       var delimiter_index, getHours, getMinutes, minutes, rawValue, sign;
       log("valueToMinutes");
       minutes = 0;
@@ -96,22 +96,23 @@ jQuery(function() {
       if (this.$element.length) {
         log("Element is defined.");
         log("processableElements: " + this.settings.processableElements);
-        this.$processableElements = this.$element.find(this.settings.processableElements.toString());
+        this.$processableElements = this.$element.find(this.settings.processableElements.toString()) || this.$element;
         settings = this.settings;
         self = this;
         log("processMethod: " + this.settings.processMethod);
         switch (this.settings.processMethod) {
           case 'minutesToHours':
             this.$processableElements.each(function() {
-              return minutesToHours($(this));
+              return self.minutesToHours($(this));
             });
             this.setState('ready');
             break;
           case 'valueToMinutes':
             this.$processableElements.each(function() {
-              valueToMinutes($(this));
+              self.valueToMinutes($(this));
               return $(this).bind("blur", function() {
-                return valueToMinutes($(this));
+                self.valueToMinutes($(this));
+                return self.callSettingFunction('onBlur', [$(this)]);
               });
             });
             this.setState('ready');
@@ -136,7 +137,8 @@ jQuery(function() {
     dataAttr: "data-minute",
     saveAttr: "data-minute",
     onReady: function() {},
-    onError: function() {}
+    onError: function() {},
+    onBlur: function() {}
   };
   return $.fn.oneHotMinute = function(options) {
     return this.each(function() {
