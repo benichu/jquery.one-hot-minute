@@ -57,10 +57,6 @@ $("#main").oneHotMinute({
   processMethod: "minutesToHours",
   onReady: function(el) {
     // do whatever you want...
-  },
-  onBlur: function(el) {
-    // apply some formatting on value change.
-    this.minutesToHours(el);
   }
 });
 ```
@@ -91,6 +87,10 @@ $("#main").oneHotMinute({
   processMethod: "valueToMinutes",
   onReady: function(el) {
     // do whatever you want...
+  },
+  onBlur: function(el) {
+    // apply some formatting on value change.
+    this.minutesToHours(el);
   }
 });
 ```
