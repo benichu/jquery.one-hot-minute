@@ -48,7 +48,7 @@ jQuery ->
       raw_minutes = Math.abs(raw_minutes)
       hours = Math.floor(raw_minutes / 60)
       minutes = raw_minutes % 60
-      minutes = @zeroFill(minutes, 2)
+      minutes = @_zeroFill(minutes, 2)
 
       result = sign + hours + "h" + minutes
 
@@ -80,7 +80,7 @@ jQuery ->
     # Homemade zero-padding function
     # zeroFill(1, 3)
     # #=> "001"
-    @zeroFill = (number, width) ->
+    @_zeroFill = (number, width) ->
       if not number? # protect against `null` or `undefined`
         number = ""
       width -= number.toString().length

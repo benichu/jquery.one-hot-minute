@@ -29,7 +29,7 @@ jQuery(function() {
       raw_minutes = Math.abs(raw_minutes);
       hours = Math.floor(raw_minutes / 60);
       minutes = raw_minutes % 60;
-      minutes = _this.zeroFill(minutes, 2);
+      minutes = _this._zeroFill(minutes, 2);
       result = sign + hours + "h" + minutes;
       if (el.attr("value") != null) {
         return el.attr("value", result);
@@ -40,7 +40,7 @@ jQuery(function() {
     valueToMinutes = function(el) {
       return log("valueToMinutes");
     };
-    this.zeroFill = function(number, width) {
+    this._zeroFill = function(number, width) {
       if (!(number != null)) {
         number = "";
       }
