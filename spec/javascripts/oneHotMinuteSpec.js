@@ -2,11 +2,43 @@
 describe('oneHotMinute', function() {
   var options;
   options = {
-    debug: false
+    debug: false,
+    processableElements: ['span', 'input']
   };
   beforeEach(function() {
     loadFixtures('fragment.html');
     return this.$element = $('#fixtures');
+  });
+  describe('processMethod: .minutesToHours()', function() {
+    beforeEach(function() {
+      return this.plugin = new $.oneHotMinute(this.$element, {
+        processMethod: 'minutesToHours'
+      });
+    });
+    it('should properly deal with undefined data-minute attributes', function() {
+      return expect(this.$element.find("#minutesToHours span.empty.undefined").html()).toEqual("0h00");
+    });
+    it('should properly deal with blank data-minute attributes', function() {
+      return expect(this.$element.find("#minutesToHours span.empty.blank").html()).toEqual("0h00");
+    });
+    it('should format 0', function() {
+      return expect(this.$element.find("#minutesToHours span.zero").html()).toEqual("0h00");
+    });
+    it('should format decimals', function() {
+      return expect(this.$element.find("#minutesToHours span.normal.decimal").html()).toEqual("3h30");
+    });
+    it('should format integers', function() {
+      return expect(this.$element.find("#minutesToHours span.normal.integer").html()).toEqual("2h08");
+    });
+    it('should format integers and add the value of a field, when there is a blank value', function() {
+      return expect(this.$element.find("#minutesToHours input.field.integer.blank").attr("value")).toEqual("2h08");
+    });
+    it('should format integers and add the value of a field, when there is an undefined value', function() {
+      return expect(this.$element.find("#minutesToHours input.field.integer.undefined").attr("value")).toEqual("2h08");
+    });
+    return it('should format integers and add the value of a field, when there is alaready a value', function() {
+      return expect(this.$element.find("#minutesToHours input.field.integer.filled").attr("value")).toEqual("2h08");
+    });
   });
   describe('String: .zeroFill()', function() {
     beforeEach(function() {

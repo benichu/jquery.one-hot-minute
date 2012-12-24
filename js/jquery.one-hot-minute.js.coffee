@@ -43,7 +43,7 @@ jQuery ->
       result = sign + hours + "h" + minutes
 
       # If we have a value attribute, like with an <input>
-      if el.attr("value")
+      if el.attr("value")?
         el.attr("value", result)
       else
         el.html result

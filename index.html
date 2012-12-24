@@ -20,14 +20,16 @@
     <div id="main">
       <div id="minutesToHours">
         <h2>minutesToHours</h2>
-        <span class="empty">undefined</span>
-        <span class="empty" data-minute="">empty</span>
+        <span class="empty undefined">undefined</span>
+        <span class="empty blank" data-minute="">empty</span>
         <br />
         <span class="zero" data-minute="0">zero</span>
         <br />
         <span class="normal" data-minute="210.6">normal</span>
         <br />
-        <input class="field" data-minute="130" value="field" />
+        <input class="field integer blank" data-minute="128" value="" />
+        <input class="field integer undefined" data-minute="128" />
+        <input class="field integer filled" data-minute="128" value="filled" />
       </div>
 
       <div id="valueToMinutes">

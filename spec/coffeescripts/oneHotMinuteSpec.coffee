@@ -1,10 +1,39 @@
 describe 'oneHotMinute', ->
   options =
     debug: false
+    processableElements: ['span', 'input']
 
   beforeEach ->
     loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
+
+  describe 'processMethod: .minutesToHours()', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element, {processMethod: 'minutesToHours'} )
+
+    it 'should properly deal with undefined data-minute attributes', ->
+      expect( @$element.find("#minutesToHours span.empty.undefined").html() ).toEqual "0h00"
+
+    it 'should properly deal with blank data-minute attributes', ->
+      expect( @$element.find("#minutesToHours span.empty.blank").html() ).toEqual "0h00"
+
+    it 'should format 0', ->
+      expect( @$element.find("#minutesToHours span.zero").html() ).toEqual "0h00"
+
+    it 'should format decimals', ->
+      expect( @$element.find("#minutesToHours span.normal.decimal").html() ).toEqual "3h30"
+
+    it 'should format integers', ->
+      expect( @$element.find("#minutesToHours span.normal.integer").html() ).toEqual "2h08"
+
+    it 'should format integers and add the value of a field, when there is a blank value', ->
+      expect( @$element.find("#minutesToHours input.field.integer.blank").attr("value") ).toEqual "2h08"
+
+    it 'should format integers and add the value of a field, when there is an undefined value', ->
+      expect( @$element.find("#minutesToHours input.field.integer.undefined").attr("value") ).toEqual "2h08"
+
+    it 'should format integers and add the value of a field, when there is alaready a value', ->
+      expect( @$element.find("#minutesToHours input.field.integer.filled").attr("value") ).toEqual "2h08"
 
   describe 'String: .zeroFill()', ->
     beforeEach ->

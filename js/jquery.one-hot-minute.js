@@ -31,7 +31,7 @@ jQuery(function() {
       minutes = raw_minutes % 60;
       minutes = _this.zeroFill(minutes, 2);
       result = sign + hours + "h" + minutes;
-      if (el.attr("value")) {
+      if (el.attr("value") != null) {
         return el.attr("value", result);
       } else {
         return el.html(result);
