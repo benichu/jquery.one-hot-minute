@@ -27,6 +27,9 @@ describe('oneHotMinute', function() {
     it('should process a duration string value (ex: 1h30)', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.string").attr("data-minute")).toEqual("90");
     });
+    it('should process a duration string with uppercase value (ex: 1H30)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.string.uppercase").attr("data-minute")).toEqual("90");
+    });
     it('should process a duration string value, without hours (ex: h30)', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.no-hours").attr("data-minute")).toEqual("30");
     });
@@ -45,8 +48,11 @@ describe('oneHotMinute', function() {
     it('should process an integer value', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.integer").attr("data-minute")).toEqual("120");
     });
-    return it('should process a decimal value', function() {
+    it('should process a decimal value', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.decimal").attr("data-minute")).toEqual("54");
+    });
+    return it('should process a negative value', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.decimal.negative").attr("data-minute")).toEqual("-54");
     });
   });
   describe('processMethod: .valueToMinutes(), on <input> elements on blur()', function() {

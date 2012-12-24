@@ -77,17 +77,30 @@ jQuery ->
     valueToMinutes = (el) =>
       log "valueToMinutes"
       minutes = 0
+      sign = ""
       # Do we have a valid attribute and is it not empty?
       if el.attr("value")? and el.val()
+        # Cleanup value
         rawValue = @_trimWhitespace el.attr("value")
-        minutes = rawValue
-        # raw_value is Integer, ex: 1
-        #
-        # raw_value is Decimal, ex: 1.5
-        #
-        # raw_value is String, ex: 1h30 or 1:30
+        rawValue = rawValue.toLowerCase()
+        sign = if rawValue.substr(0, 1) is "-" then "-" else ""
 
-      el.attr(@settings.saveAttr, minutes)
+        delimiter_index = Math.max(rawValue.indexOf(":"), rawValue.indexOf("h"))
+        if delimiter_index > -1
+          # raw_value is String, ex: 1h30 or 1:30
+          # Get hours part
+          getHours = if delimiter_index > 0 then rawValue.substr(0, delimiter_index) else 0
+          #
+          # Get minutes part
+          getMinutes = if delimiter_index < rawValue.length then rawValue.substr(delimiter_index + 1, 2) else 0
+          minutes = (parseInt(getHours) * 60) + parseInt(getMinutes)
+        else
+          # raw_value is Integer, ex: 1 or Decimal, ex: 1.5
+          minutes = parseFloat(rawValue) * 60
+          sign = ""
+
+
+      el.attr(@settings.saveAttr, sign + minutes)
 
     # Trimming white-space
     # _trimWhitespace(" 111 ")

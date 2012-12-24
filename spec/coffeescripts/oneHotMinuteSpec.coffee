@@ -23,6 +23,9 @@ describe 'oneHotMinute', ->
     it 'should process a duration string value (ex: 1h30)', ->
       expect( @$element.find("#valueToMinutes input.normal.string").attr("data-minute") ).toEqual "90"
 
+    it 'should process a duration string with uppercase value (ex: 1H30)', ->
+      expect( @$element.find("#valueToMinutes input.normal.string.uppercase").attr("data-minute") ).toEqual "90"
+
     it 'should process a duration string value, without hours (ex: h30)', ->
       expect( @$element.find("#valueToMinutes input.normal.no-hours").attr("data-minute") ).toEqual "30"
 
@@ -43,6 +46,9 @@ describe 'oneHotMinute', ->
 
     it 'should process a decimal value', ->
       expect( @$element.find("#valueToMinutes input.normal.decimal").attr("data-minute") ).toEqual "54"
+
+    it 'should process a negative value', ->
+      expect( @$element.find("#valueToMinutes input.normal.decimal.negative").attr("data-minute") ).toEqual "-54"
 
   describe 'processMethod: .valueToMinutes(), on <input> elements on blur()', ->
     beforeEach ->

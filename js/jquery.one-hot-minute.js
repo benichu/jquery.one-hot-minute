@@ -38,14 +38,25 @@ jQuery(function() {
       }
     };
     valueToMinutes = function(el) {
-      var minutes, rawValue;
+      var delimiter_index, getHours, getMinutes, minutes, rawValue, sign;
       log("valueToMinutes");
       minutes = 0;
+      sign = "";
       if ((el.attr("value") != null) && el.val()) {
         rawValue = _this._trimWhitespace(el.attr("value"));
-        minutes = rawValue;
+        rawValue = rawValue.toLowerCase();
+        sign = rawValue.substr(0, 1) === "-" ? "-" : "";
+        delimiter_index = Math.max(rawValue.indexOf(":"), rawValue.indexOf("h"));
+        if (delimiter_index > -1) {
+          getHours = delimiter_index > 0 ? rawValue.substr(0, delimiter_index) : 0;
+          getMinutes = delimiter_index < rawValue.length ? rawValue.substr(delimiter_index + 1, 2) : 0;
+          minutes = (parseInt(getHours) * 60) + parseInt(getMinutes);
+        } else {
+          minutes = parseFloat(rawValue) * 60;
+          sign = "";
+        }
       }
-      return el.attr(_this.settings.saveAttr, minutes);
+      return el.attr(_this.settings.saveAttr, sign + minutes);
     };
     this._trimWhitespace = function(value) {
       var trimmedValue;
