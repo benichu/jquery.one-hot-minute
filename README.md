@@ -35,8 +35,8 @@ and add it to your project.
 ### Basic HTML, processingMethod: `minutesToHours`
 
 Format an element's display value to a duration format: HH:MM
-That HTML element should have a `data-minute` (or an option `dataAttr` set) attribute
-with the raw value to be converted
+That HTML element should have a `data-minute` attribute
+(or whatever is defined as an option `dataAttr`) with the raw value to be converted.
 
 __Example__
 
