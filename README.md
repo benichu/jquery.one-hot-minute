@@ -42,8 +42,14 @@ __Example__
 
 ```html
    <span id="my_element" data-minute="130">130</span>
-   #=> <span id="my_element" data-minute="130">02h10</span>
+   #=> <span id="my_element" data-minute="130">2h10</span>
 ```
+ALSO,
+```html
+   <input id="my_element" data-minute="130" />
+   #=> <input id="my_element" data-minute="130" value="2h10" />
+```
+
 
 __Basic Initialization__
 
