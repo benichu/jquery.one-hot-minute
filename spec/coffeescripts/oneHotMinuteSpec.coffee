@@ -7,7 +7,7 @@ describe 'oneHotMinute', ->
     loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
 
-  describe 'processMethod: .valueToMinutes(), on <input> elements', ->
+  describe 'processMethod: .valueToMinutes(), on <input> elements at init()', ->
     beforeEach ->
       @plugin = new $.oneHotMinute( @$element, {processMethod: 'valueToMinutes'} )
 
@@ -43,6 +43,13 @@ describe 'oneHotMinute', ->
 
     it 'should process a decimal value', ->
       expect( @$element.find("#valueToMinutes input.normal.decimal").attr("data-minute") ).toEqual "54"
+
+  describe 'processMethod: .valueToMinutes(), on <input> elements on blur()', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element, {processMethod: 'valueToMinutes'} )
+
+    it 'should catch a blur event of an element, and automatically update the attribute', ->
+      # expect( @$element.find("#valueToMinutes input.empty.undefined").attr("data-minute") ).toEqual "0"
 
   describe 'processMethod: .minutesToHours()', ->
     beforeEach ->
@@ -93,6 +100,28 @@ describe 'oneHotMinute', ->
 
     it 'should prepend `0` to an undefined value', ->
       expect( @plugin._zeroFill(undefined,2) ).toBe("00")
+
+  describe 'String: ._trimWhitespace()', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element )
+
+    it 'should be defined', ->
+      expect( @plugin._trimWhitespace ).toBeDefined()
+
+    it 'should right trim', ->
+      expect( @plugin._trimWhitespace("111 ") ).toBe("111")
+
+    it 'should left trim', ->
+      expect( @plugin._trimWhitespace(" 111") ).toBe("111")
+
+    it 'should left-right trim', ->
+      expect( @plugin._trimWhitespace(" 111 ") ).toBe("111")
+
+    it 'should trim a null value', ->
+      expect( @plugin._trimWhitespace(null) ).toBe("")
+
+    it 'should trim an undefined value', ->
+      expect( @plugin._trimWhitespace(undefined) ).toBe("")
 
   # Basic plugin behavior, nothing should be touched
   describe 'plugin behavior', ->

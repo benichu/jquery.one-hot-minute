@@ -9,7 +9,7 @@ describe('oneHotMinute', function() {
     loadFixtures('fragment.html');
     return this.$element = $('#fixtures');
   });
-  describe('processMethod: .valueToMinutes(), on <input> elements', function() {
+  describe('processMethod: .valueToMinutes(), on <input> elements at init()', function() {
     beforeEach(function() {
       return this.plugin = new $.oneHotMinute(this.$element, {
         processMethod: 'valueToMinutes'
@@ -48,6 +48,14 @@ describe('oneHotMinute', function() {
     return it('should process a decimal value', function() {
       return expect(this.$element.find("#valueToMinutes input.normal.decimal").attr("data-minute")).toEqual("54");
     });
+  });
+  describe('processMethod: .valueToMinutes(), on <input> elements on blur()', function() {
+    beforeEach(function() {
+      return this.plugin = new $.oneHotMinute(this.$element, {
+        processMethod: 'valueToMinutes'
+      });
+    });
+    return it('should catch a blur event of an element, and automatically update the attribute', function() {});
   });
   describe('processMethod: .minutesToHours()', function() {
     beforeEach(function() {
@@ -101,6 +109,29 @@ describe('oneHotMinute', function() {
     });
     return it('should prepend `0` to an undefined value', function() {
       return expect(this.plugin._zeroFill(void 0, 2)).toBe("00");
+    });
+  });
+  describe('String: ._trimWhitespace()', function() {
+    beforeEach(function() {
+      return this.plugin = new $.oneHotMinute(this.$element);
+    });
+    it('should be defined', function() {
+      return expect(this.plugin._trimWhitespace).toBeDefined();
+    });
+    it('should right trim', function() {
+      return expect(this.plugin._trimWhitespace("111 ")).toBe("111");
+    });
+    it('should left trim', function() {
+      return expect(this.plugin._trimWhitespace(" 111")).toBe("111");
+    });
+    it('should left-right trim', function() {
+      return expect(this.plugin._trimWhitespace(" 111 ")).toBe("111");
+    });
+    it('should trim a null value', function() {
+      return expect(this.plugin._trimWhitespace(null)).toBe("");
+    });
+    return it('should trim an undefined value', function() {
+      return expect(this.plugin._trimWhitespace(void 0)).toBe("");
     });
   });
   describe('plugin behavior', function() {

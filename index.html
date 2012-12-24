@@ -57,10 +57,21 @@
         processableElements: ['span', 'input'],
         processMethod: "minutesToHours",
         onReady: function() {
-          console.log("READY");
+          console.log("READY: minutesToHours");
         },
         onError: function() {
-          console.log("ERROR");
+          console.log("ERROR: minutesToHours");
+        }
+      } );
+      $( '#main #valueToMinutes' ).oneHotMinute( {
+        debug: true,
+        processableElements: ['input'],
+        processMethod: "valueToMinutes",
+        onReady: function() {
+          console.log("READY: valueToMinutes");
+        },
+        onError: function() {
+          console.log("ERROR: valueToMinutes");
         }
       } );
     } );

@@ -43,11 +43,11 @@ jQuery ->
     minutesToHours = (el) =>
       log "applying minutesToHours"
       # do we force at `0` if dataAttr is empty
-      raw_minutes = parseInt el.attr(@settings.dataAttr) or 0
-      sign = if raw_minutes < 0 then "-" else ""
-      raw_minutes = Math.abs(raw_minutes)
-      hours = Math.floor(raw_minutes / 60)
-      minutes = raw_minutes % 60
+      rawMinutes = parseInt el.attr(@settings.dataAttr) or 0
+      sign = if rawMinutes < 0 then "-" else ""
+      rawMinutes = Math.abs(rawMinutes)
+      hours = Math.floor(rawMinutes / 60)
+      minutes = rawMinutes % 60
       minutes = @_zeroFill(minutes, 2)
 
       result = sign + hours + "h" + minutes
@@ -76,9 +76,30 @@ jQuery ->
     #
     valueToMinutes = (el) =>
       log "valueToMinutes"
+      minutes = 0
+      # Do we have a valid attribute and is it not empty?
+      if el.attr("value")? and el.val()
+        rawValue = @_trimWhitespace el.attr("value")
+        minutes = rawValue
+        # raw_value is Integer, ex: 1
+        #
+        # raw_value is Decimal, ex: 1.5
+        #
+        # raw_value is String, ex: 1h30 or 1:30
+
+      el.attr(@settings.saveAttr, minutes)
+
+    # Trimming white-space
+    # _trimWhitespace(" 111 ")
+    # #=> "111"
+    @_trimWhitespace = (value) ->
+      if not value? # protect against `null` or `undefined`
+        value = ""
+      trimmedValue = value.replace /^\s+|\s+$/g, ""
+      trimmedValue
 
     # Homemade zero-padding function
-    # zeroFill(1, 3)
+    # _zeroFill(1, 3)
     # #=> "001"
     @_zeroFill = (number, width) ->
       if not number? # protect against `null` or `undefined`

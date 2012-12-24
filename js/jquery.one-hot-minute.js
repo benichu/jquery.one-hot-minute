@@ -22,13 +22,13 @@ jQuery(function() {
       return this.settings[name].apply(this, args);
     };
     minutesToHours = function(el) {
-      var hours, minutes, raw_minutes, result, sign;
+      var hours, minutes, rawMinutes, result, sign;
       log("applying minutesToHours");
-      raw_minutes = parseInt(el.attr(_this.settings.dataAttr) || 0);
-      sign = raw_minutes < 0 ? "-" : "";
-      raw_minutes = Math.abs(raw_minutes);
-      hours = Math.floor(raw_minutes / 60);
-      minutes = raw_minutes % 60;
+      rawMinutes = parseInt(el.attr(_this.settings.dataAttr) || 0);
+      sign = rawMinutes < 0 ? "-" : "";
+      rawMinutes = Math.abs(rawMinutes);
+      hours = Math.floor(rawMinutes / 60);
+      minutes = rawMinutes % 60;
       minutes = _this._zeroFill(minutes, 2);
       result = sign + hours + "h" + minutes;
       if (el.attr("value") != null) {
@@ -38,7 +38,22 @@ jQuery(function() {
       }
     };
     valueToMinutes = function(el) {
-      return log("valueToMinutes");
+      var minutes, rawValue;
+      log("valueToMinutes");
+      minutes = 0;
+      if ((el.attr("value") != null) && el.val()) {
+        rawValue = _this._trimWhitespace(el.attr("value"));
+        minutes = rawValue;
+      }
+      return el.attr(_this.settings.saveAttr, minutes);
+    };
+    this._trimWhitespace = function(value) {
+      var trimmedValue;
+      if (!(value != null)) {
+        value = "";
+      }
+      trimmedValue = value.replace(/^\s+|\s+$/g, "");
+      return trimmedValue;
     };
     this._zeroFill = function(number, width) {
       if (!(number != null)) {
