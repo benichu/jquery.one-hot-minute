@@ -32,7 +32,7 @@ download this file [jquery.one-hot-minute.min.js](https://github.com/benichu/jqu
 and add it to your project.
 
 
-### Basic HTML, processingMethod: `minutesToHours`
+### EXAMPLE of processingMethod: `minutesToHours`
 
 Format an element's display value to a duration format: HH:MM
 That HTML element should have a `data-minute` attribute
