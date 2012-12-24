@@ -7,6 +7,43 @@ describe 'oneHotMinute', ->
     loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
 
+  describe 'processMethod: .valueToMinutes(), on <input> elements', ->
+    beforeEach ->
+      @plugin = new $.oneHotMinute( @$element, {processMethod: 'valueToMinutes'} )
+
+    it 'should process an undefined value', ->
+      expect( @$element.find("#valueToMinutes input.empty.undefined").attr("data-minute") ).toEqual "0"
+
+    it 'should process a blank value', ->
+      expect( @$element.find("#valueToMinutes input.empty.blank").attr("data-minute") ).toEqual "0"
+
+    it 'should process a value of 0', ->
+      expect( @$element.find("#valueToMinutes input.zero").attr("data-minute") ).toEqual "0"
+
+    it 'should process a duration string value (ex: 1h30)', ->
+      expect( @$element.find("#valueToMinutes input.normal.string").attr("data-minute") ).toEqual "90"
+
+    it 'should process a duration string value, without hours (ex: h30)', ->
+      expect( @$element.find("#valueToMinutes input.normal.no-hours").attr("data-minute") ).toEqual "30"
+
+    it 'should process a duration string value, with only 1 minute number (ex: 1h1)', ->
+      expect( @$element.find("#valueToMinutes input.normal.one-minute").attr("data-minute") ).toEqual "61"
+
+    it 'should process a duration string value with colon (ex: 1:30)', ->
+      expect( @$element.find("#valueToMinutes input.normal.string.colon").attr("data-minute") ).toEqual "90"
+
+    it 'should process a duration string value with colon, without hours (ex: :30)', ->
+      expect( @$element.find("#valueToMinutes input.normal.string.colon.no-hours").attr("data-minute") ).toEqual "30"
+
+    it 'should process a duration string value with colon, with only 1 minute number (ex: 1:1)', ->
+      expect( @$element.find("#valueToMinutes input.normal.string.colon.one-minute").attr("data-minute") ).toEqual "61"
+
+    it 'should process an integer value', ->
+      expect( @$element.find("#valueToMinutes input.normal.integer").attr("data-minute") ).toEqual "120"
+
+    it 'should process a decimal value', ->
+      expect( @$element.find("#valueToMinutes input.normal.decimal").attr("data-minute") ).toEqual "54"
+
   describe 'processMethod: .minutesToHours()', ->
     beforeEach ->
       @plugin = new $.oneHotMinute( @$element, {processMethod: 'minutesToHours'} )

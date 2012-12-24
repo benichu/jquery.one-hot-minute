@@ -9,6 +9,46 @@ describe('oneHotMinute', function() {
     loadFixtures('fragment.html');
     return this.$element = $('#fixtures');
   });
+  describe('processMethod: .valueToMinutes(), on <input> elements', function() {
+    beforeEach(function() {
+      return this.plugin = new $.oneHotMinute(this.$element, {
+        processMethod: 'valueToMinutes'
+      });
+    });
+    it('should process an undefined value', function() {
+      return expect(this.$element.find("#valueToMinutes input.empty.undefined").attr("data-minute")).toEqual("0");
+    });
+    it('should process a blank value', function() {
+      return expect(this.$element.find("#valueToMinutes input.empty.blank").attr("data-minute")).toEqual("0");
+    });
+    it('should process a value of 0', function() {
+      return expect(this.$element.find("#valueToMinutes input.zero").attr("data-minute")).toEqual("0");
+    });
+    it('should process a duration string value (ex: 1h30)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.string").attr("data-minute")).toEqual("90");
+    });
+    it('should process a duration string value, without hours (ex: h30)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.no-hours").attr("data-minute")).toEqual("30");
+    });
+    it('should process a duration string value, with only 1 minute number (ex: 1h1)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.one-minute").attr("data-minute")).toEqual("61");
+    });
+    it('should process a duration string value with colon (ex: 1:30)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.string.colon").attr("data-minute")).toEqual("90");
+    });
+    it('should process a duration string value with colon, without hours (ex: :30)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.string.colon.no-hours").attr("data-minute")).toEqual("30");
+    });
+    it('should process a duration string value with colon, with only 1 minute number (ex: 1:1)', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.string.colon.one-minute").attr("data-minute")).toEqual("61");
+    });
+    it('should process an integer value', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.integer").attr("data-minute")).toEqual("120");
+    });
+    return it('should process a decimal value', function() {
+      return expect(this.$element.find("#valueToMinutes input.normal.decimal").attr("data-minute")).toEqual("54");
+    });
+  });
   describe('processMethod: .minutesToHours()', function() {
     beforeEach(function() {
       return this.plugin = new $.oneHotMinute(this.$element, {
